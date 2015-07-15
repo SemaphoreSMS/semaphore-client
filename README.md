@@ -25,8 +25,6 @@ composer require kickstartph/semaphore-client
 ```
 The sender ID can be overridden through the client send command as well:
 ```php
-<?php
-
     echo $client->send( '09991234567', 'Your message', '<NEW_SENDER_ID>' );
 ```
 
@@ -61,16 +59,19 @@ The encoded_id of the message is returned as a response when a message is sent
 You can retrieve up to 100 sent messages at a time, with support for pagination by passing the optional $page variable:
 
 ```php 
-    echo $client->messages( 2 ); //Will return the results for page 2 of sent messages
+    //Will return the results for page 2 of sent messages
+    echo $client->messages( 2 ); 
 ```
 
 Messages by date range:
 ```php 
-    echo $client->messagesByDate( 'january 1 2015', 'feb 1 2015' ); //Use any date format str_to_time() supports 
+    //Use any date format str_to_time() supports
+    echo $client->messagesByDate( 'january 1 2015', 'feb 1 2015' );  
 ```
 Messages by telco network:
 ```php 
-    echo $client->messages( 'globe' ); //Returns all messages sent to recipients on the Globe network
+    //Returns all messages sent to recipients on the Globe network
+    echo $client->messages( 'globe' ); 
 ```
 
 
