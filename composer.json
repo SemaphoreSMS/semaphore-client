@@ -1,0 +1,18 @@
+{
+    "name": "kickstart/semaphore-client",
+    "description": "A wrapper for accessing the Semaphore SMS API",
+    "require": {
+        "guzzle/guzzle": "^3.9"
+    },
+    "authors": [
+        {
+            "name": "Alex Alabiso",
+            "email": "alex@kickstart.ph"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Semaphore\\": "src/"
+        }
+    }
+}
