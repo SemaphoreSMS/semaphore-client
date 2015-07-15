@@ -36,3 +36,14 @@ composer require kickstartph/semaphore-client
     echo $client->balance();
 
 ```
+
+### Message Status
+```php
+<?php
+    require_once( 'vendor/autoload.php' );
+
+    use Semaphore\SemaphoreClient;
+    $client = new SemaphoreClient( '<YOUR_API_KEY>', '<OPTIONAL_SENDER_ID' );
+    echo $client->message( <ENCODED_ID> );
+
+```
