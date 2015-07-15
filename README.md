@@ -1,6 +1,6 @@
 # Semaphore Client
 
-Semaphore Client is a PHP wrapper for the Semaphore SMS API'
+Semaphore Client is a PHP wrapper for the Semaphore SMS API
 
 # Table of Contents
  - [Installation](#installation)
