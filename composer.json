@@ -1,5 +1,5 @@
 {
-    "name": "kickstart/semaphore-client",
+    "name": "kickstartph/semaphore-client",
     "description": "A wrapper for accessing the Semaphore SMS API",
     "require": {
         "guzzle/guzzle": "^3.9"

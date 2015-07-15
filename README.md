@@ -10,7 +10,7 @@ Semaphore Client is a PHP wrapper for the Semaphore SMS API'
 ## Installation
 
 ```sh
-composer require kickstart/semaphore-client
+composer require kickstartph/semaphore-client
 ```
 
 ## Basic Usage
