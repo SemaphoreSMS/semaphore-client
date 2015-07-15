@@ -2,7 +2,7 @@
 
 namespace Semaphore;
 
-use Guzzle\Http\Client;
+use GuzzleHttp\Client;
 
 /**
  * Class SemaphoreClient
@@ -26,24 +26,23 @@ class SemaphoreClient
     {
         $this->apiKey = $apiKey;
         $this->senderId = $senderId;
-        $this->client = new Client( 'http://api.semaphore.co/' );
+        $this->client = new Client( ['base_uri' => 'http://api.semaphore.co/' ] );
     }
 
     /**
      * Check the balance of your account
      *
-     * @return \Guzzle\Http\EntityBodyInterface|string
+	 * @return \Psr\Http\Message\StreamInterface
      */
     public function balance()
     {
-        $query = [
+        $params = [
             'query' => [
                 'api' => $this->apiKey,
             ]
         ];
 
-        $request = $this->client->get( 'api/sms/account', [], $query);
-        $response = $request->send();
+        $response = $this->client->get( 'api/sms/account', $params);
         return $response->getBody();
     }
 
@@ -54,29 +53,31 @@ class SemaphoreClient
      * @param $message - The message
      * @param null $senderId - Optional Sender ID (defaults to initialized value or SEMAPHORE)
      * @param bool|false $bulk - Optional send as bulk
-     * @return \Guzzle\Http\EntityBodyInterface|string
+	 * @return \Psr\Http\Message\StreamInterface
      */
     public function send( $number, $message, $senderId = null, $bulk = false )
     {
-        $postFields = array(
-            'api' => $this->apiKey,
-            'message' => $message,
-            'number' => $number,
-            'from' => $this->senderId
-        );
+        $params = [
+			'form_params' => [
+				'api' => $this->apiKey,
+				'message' => $message,
+				'number' => $number,
+				'from' => $this->senderId
+			]
+        ];
 
         if( $senderId != null )
         {
-            $postFields[ 'from' ] = $senderId;
+            $params[ 'form_params' ][ 'from' ] = $senderId;
         }
 
         if( $bulk != true )
         {
-            $request = $this->client->post('api/sms')->addPostFields( $postFields );
+            $response = $this->client->post('api/sms', $params );
         } else {
-            $request = $this->client->post('v3/bulk_api/sms')->addPostFields( $postFields );
+            $response = $this->client->post('v3/bulk_api/sms', $params );
         }
-        $response = $request->send();
+
         return $response->getBody();
     }
 
@@ -84,35 +85,34 @@ class SemaphoreClient
      * Retrieves data about a specific message
      *
      * @param $messageId - The encoded ID of the message
-     * @return \Guzzle\Http\EntityBodyInterface|string
+	 * @return \Psr\Http\Message\StreamInterface
      */
     public function message( $messageId )
     {
-        $query = [
+        $params = [
             'query' => [
                 'api' => $this->apiKey,
             ]
         ];
-        $request = $this->client->get( 'api/messages/' . urlencode( $messageId ), [], $query );
-        $response = $request->send();
+        $response = $this->client->get( 'api/messages/' . urlencode( $messageId ), $params );
         return $response->getBody();
     }
 
     /**
      * Retrieves up to 100 messages, offset by page
      * @param null $page - Optional page for results past the initial 100
-     * @return \Guzzle\Http\EntityBodyInterface|string
+	 * @return \Psr\Http\Message\StreamInterface
      */
     public function messages( $page = null )
     {
-        $query = [
+        $params = [
             'query' => [
                 'api' => $this->apiKey,
                 'page' => $page,
             ]
         ];
-        $request = $this->client->get( 'api/messages', [], $query );
-        $response = $request->send();
+        $response = $this->client->get( 'api/messages', $params );
+
         return $response->getBody();
     }
 
@@ -121,21 +121,20 @@ class SemaphoreClient
      *
      * @param $startDate - Automatically converted to UNIX timestamp via str_to_time
      * @param $endDate - Automatically converted to UNIX timestamp via str_to_time
-     * @return \Guzzle\Http\EntityBodyInterface|string
+	 * @return \Psr\Http\Message\StreamInterface
      */
     public function messagesByDate( $startDate, $endDate )
     {
         $startDate = strtotime( $startDate );
         $endDate = strtotime( $endDate );
-        $query = [
+        $params = [
             'query' => [
                 'api' => $this->apiKey,
                 'starts_at' => $startDate,
                 'ends_at'  => $endDate
             ]
         ];
-        $request = $this->client->get( 'api/messages/period',[], $query );
-        $response = $request->send();
+        $response = $this->client->get( 'api/messages/period', $params );
         return $response->getBody();
     }
 
@@ -143,20 +142,18 @@ class SemaphoreClient
      * Retrieve messages sent to a specific network
      *
      * @param $network - (globe, smart, smart_others)
-     * @return \Guzzle\Http\EntityBodyInterface|string
+	 * @return \Psr\Http\Message\StreamInterface
      */
     public function messagesByNetwork( $network )
     {
-        $query = [
+        $params = [
             'query' => [
                 'api' => $this->apiKey,
                 'telco' => $network,
             ]
         ];
-        $request = $this->client->get( 'api/messages/network', [], $query );
-        $response = $request->send();
+        $response = $this->client->get( 'api/messages/network', $params );
         return $response->getBody();
-
     }
 
 }
