@@ -14,12 +14,25 @@ composer require kickstart/semaphore-client
 ```
 
 ## Basic Usage
+
+### Sending Messages
 ```php
 <?php
     require_once( 'vendor/autoload.php' );
 
     use Semaphore\SemaphoreClient;
     $client = new SemaphoreClient( '<YOUR_API_KEY>', '<OPTIONAL_SENDER_ID' );
-    $client->send( '09991234567', 'Your message' );
+    echo $client->send( '09991234567', 'Your message' );
+
+```
+
+### Account Balance
+```php
+<?php
+    require_once( 'vendor/autoload.php' );
+
+    use Semaphore\SemaphoreClient;
+    $client = new SemaphoreClient( '<YOUR_API_KEY>', '<OPTIONAL_SENDER_ID' );
+    echo $client->balance();
 
 ```
