@@ -65,18 +65,18 @@ You can retrieve up to 100 sent messages at a time, with support for pagination 
     echo $client->messages( [ 'limit'=> 100 , 'page' => 2 ] ); 
 ```
 
-####Messages by date range:
+#### Messages by date range:
 ```php 
     //Use any date format str_to_time() supports
     echo $client->messages( 'startDate' => '2016-10-01, '2016-10-31' );  
 ```
-####Messages by telco network:
+#### Messages by telco network:
 ```php 
     //Returns all messages sent to recipients on the Globe network
     echo $client->messages( ['globe'] ); 
 ```
 
-####Supported Filters for retrieving messages
+#### Supported Filters for retrieving messages
 ```php
    $options = [
         'limit' => 100,
@@ -91,7 +91,7 @@ You can retrieve up to 100 sent messages at a time, with support for pagination 
 
 ### Other functions
 Below are other calls you can make:
-####Account Information
+#### Account Information
 ```php
     echo $client->account();
 ```
@@ -103,7 +103,7 @@ Below are other calls you can make:
   "credit_balance": 5000
 }
 ```
-####Users
+#### Users
 ```php
     echo $account->users();
 ```
@@ -122,7 +122,7 @@ Below are other calls you can make:
 ]
 ```
 
-####Sender Names
+#### Sender Names
 ```php
     echo $account->sendernames();
 ```
@@ -140,7 +140,7 @@ Below are other calls you can make:
   }
 ]
 ```
-####Transactions
+#### Transactions
 ```php
     echo $account->transactions();
 ```
